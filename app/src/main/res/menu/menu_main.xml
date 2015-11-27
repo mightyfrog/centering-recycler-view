@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/linear_vertical"
+        android:title="@string/linear_vertical"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/linear_horizontal"
+        android:title="@string/linear_horizontal"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/grid_vertical"
+        android:title="@string/grid_vertical"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/grid_horizontal"
+        android:title="@string/grid_horizontal"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/staggered_vertical"
+        android:title="@string/staggered_vertical"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/staggered_horizontal"
+        android:title="@string/staggered_horizontal"
+        app:showAsAction="never" />
+
+</menu>

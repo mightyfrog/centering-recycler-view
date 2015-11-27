@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="app_name">CenteringRecyclerView Demo</string>
+    <string name="linear_vertical">linear vertical</string>
+    <string name="linear_horizontal">linear horizontal</string>
+    <string name="grid_vertical">grid vertical</string>
+    <string name="grid_horizontal">grid horizontal</string>
+    <string name="staggered_vertical">staggered vertical</string>
+    <string name="staggered_horizontal">staggered horizontal</string>
+    <string name="subtitle">Center = %1$d</string>
+
+</resources>
