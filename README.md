@@ -6,12 +6,11 @@ A RecyclerView that centers a view.
 Download
 --------
 
-Gradle:
 ```groovy
 compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.0'
 ```
 
-How to use:
+Usage
 --------
 ```java
 mRecyclerView.center(100); // 100 = adapter position
