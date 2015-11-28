@@ -1,1 +1,1 @@
-include ':app', ':centeringrecyclerview'
+include ':demo', ':centeringrecyclerview'
