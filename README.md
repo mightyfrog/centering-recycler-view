@@ -3,7 +3,7 @@ A view centering RecyclerView.
 
 <img src="website/demo.gif" alt="demo" width="200px" />
 
-Download
+Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centering-recycler-view/images/download.svg) ](https://bintray.com/mightyfrog/maven/centering-recycler-view/_latestVersion)
 --------
 
 ```groovy
