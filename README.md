@@ -7,7 +7,7 @@ Download
 --------
 
 ```groovy
-compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.0'
+compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.1'
 ```
 
 Usage
