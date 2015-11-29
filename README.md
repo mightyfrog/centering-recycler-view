@@ -1,5 +1,5 @@
 # Centering Recycler View (Android)
-A RecyclerView that centers a view.
+A view centering RecyclerView.
 
 <img src="website/demo.gif" alt="demo" width="200px" />
 
@@ -13,6 +13,9 @@ compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.0'
 Usage
 --------
 ```java
+CenteringRecyclerView mRecyclerView;
+...
+...
 mRecyclerView.center(100); // 100 = adapter position
 ```
 
