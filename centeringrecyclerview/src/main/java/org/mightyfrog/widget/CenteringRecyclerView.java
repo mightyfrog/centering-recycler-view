@@ -18,7 +18,6 @@ package org.mightyfrog.widget;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.annotation.IntRange;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -57,7 +56,7 @@ public class CenteringRecyclerView extends RecyclerView {
      * @see #start(int)
      * @see #end(int)
      */
-    public void setSelection(int position, @IntRange(from = 0, to = 4) int alignment) {
+    public void setSelection(int position, int alignment) {
         switch (alignment) {
             case ALIGN_CENTER:
                 center(position);
@@ -75,7 +74,7 @@ public class CenteringRecyclerView extends RecyclerView {
                 end(position);
                 break;
             default:
-                throw new IllegalArgumentException("unknown aligmnment");
+                throw new IllegalArgumentException("unknown alignment");
         }
     }
 
