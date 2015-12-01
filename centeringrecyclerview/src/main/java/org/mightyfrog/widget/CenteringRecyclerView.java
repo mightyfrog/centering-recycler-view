@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
 public class CenteringRecyclerView extends RecyclerView {
@@ -117,20 +118,30 @@ public class CenteringRecyclerView extends RecyclerView {
             post(new Runnable() {
                 @Override
                 public void run() {
-                    int[] firstVisibleItemPositions = sglm.findFirstVisibleItemPositions(null);
-                    int[] lastVisibleItemPositions = sglm.findLastVisibleItemPositions(null);
-                    Arrays.sort(firstVisibleItemPositions);
-                    Arrays.sort(lastVisibleItemPositions);
-                    int first = firstVisibleItemPositions[0];
-                    int last = lastVisibleItemPositions[lastVisibleItemPositions.length - 1];
-                    int childPosition = 0;
-                    for (int i = first; i < last; i++) {
-                        if (i == position) {
-                            int offset = getBottomOffset(sglm.getOrientation(), childPosition);
-                            sglm.scrollToPositionWithOffset(position, offset);
-                            break;
+                    try {
+                        // https://code.google.com/p/android/issues/detail?id=181461
+                        // https://code.google.com/p/android/issues/detail?id=180521
+                        Method m = sglm.getClass().getDeclaredMethod("ensureOrientationHelper");
+                        m.setAccessible(true);
+                        m.invoke(sglm);
+
+                        int[] firstVisibleItemPositions = sglm.findFirstVisibleItemPositions(null);
+                        int[] lastVisibleItemPositions = sglm.findLastVisibleItemPositions(null);
+                        Arrays.sort(firstVisibleItemPositions);
+                        Arrays.sort(lastVisibleItemPositions);
+                        int first = firstVisibleItemPositions[0];
+                        int last = lastVisibleItemPositions[lastVisibleItemPositions.length - 1];
+                        int childPosition = 0;
+                        for (int i = first; i < last; i++) {
+                            if (i == position) {
+                                int offset = getBottomOffset(sglm.getOrientation(), childPosition);
+                                sglm.scrollToPositionWithOffset(position, offset);
+                                break;
+                            }
+                            childPosition++;
                         }
-                        childPosition++;
+                    } catch (Exception e) {
+                        // ignore, the grid is still visible but not fully centered
                     }
                 }
             });
@@ -178,20 +189,30 @@ public class CenteringRecyclerView extends RecyclerView {
             post(new Runnable() {
                 @Override
                 public void run() {
-                    int[] firstVisibleItemPositions = sglm.findFirstVisibleItemPositions(null);
-                    int[] lastVisibleItemPositions = sglm.findLastVisibleItemPositions(null);
-                    Arrays.sort(firstVisibleItemPositions);
-                    Arrays.sort(lastVisibleItemPositions);
-                    int first = firstVisibleItemPositions[0];
-                    int last = lastVisibleItemPositions[lastVisibleItemPositions.length - 1];
-                    int childPosition = 0;
-                    for (int i = first; i < last; i++) {
-                        if (i == position) {
-                            int offset = getCenterOffset(sglm.getOrientation(), childPosition);
-                            sglm.scrollToPositionWithOffset(position, offset);
-                            break;
+                    try {
+                        // https://code.google.com/p/android/issues/detail?id=181461
+                        // https://code.google.com/p/android/issues/detail?id=180521
+                        Method m = sglm.getClass().getDeclaredMethod("ensureOrientationHelper");
+                        m.setAccessible(true);
+                        m.invoke(sglm);
+
+                        int[] firstVisibleItemPositions = sglm.findFirstVisibleItemPositions(null);
+                        int[] lastVisibleItemPositions = sglm.findLastVisibleItemPositions(null);
+                        Arrays.sort(firstVisibleItemPositions);
+                        Arrays.sort(lastVisibleItemPositions);
+                        int first = firstVisibleItemPositions[0];
+                        int last = lastVisibleItemPositions[lastVisibleItemPositions.length - 1];
+                        int childPosition = 0;
+                        for (int i = first; i < last; i++) {
+                            if (i == position) {
+                                int offset = getCenterOffset(sglm.getOrientation(), childPosition);
+                                sglm.scrollToPositionWithOffset(position, offset);
+                                break;
+                            }
+                            childPosition++;
                         }
-                        childPosition++;
+                    } catch (Exception e) {
+                        // ignore, the grid is still visible but not fully centered
                     }
                 }
             });
