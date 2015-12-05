@@ -9,47 +9,67 @@ Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centeri
 --------
 
 ```groovy
-compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.3'
+compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.4'
 ```
 
 Usage
 --------
-####center(int position)
+####center, top, bottom, start, end(int position)
 ```java
 CenteringRecyclerView mRecyclerView;
 ...
-mRecyclerView.center(100); // 100 = adapter position
-```
-####top(int position) - vertical orientation
-```java
-CenteringRecyclerView mRecyclerView;
-...
-mRecyclerView.top(100); // 100 = adapter position
-```
-####bottom(int position) - vertical orientation
-```java
-CenteringRecyclerView mRecyclerView;
-...
-mRecyclerView.bottom(100); // 100 = adapter position
-```
-####start(int) - horizontal orientation = left
-```java
-CenteringRecyclerView mRecyclerView;
-...
-mRecyclerView.start(100); // 100 = adapter position
-```
-####end(int) - horizontal orientation = right
-```java
-CenteringRecyclerView mRecyclerView;
-...
-mRecyclerView.end(100); // 100 = adapter position
+int position = 100; // adapter position
+mRecyclerView.center(position);
+
+mRecyclerView.top(position);
+
+mRecyclerView.bottom(position);
+
+mRecyclerView.start(position);
+
+mRecyclerView.end(position);
 ```
 ####setSelection(int position, int alignment)
 ```java
 CenteringRecyclerView mRecyclerView;
 ...
-mRecyclerView.setSelection(100, CenteringRecyclerView.ALIGN_CENTER); // 100 = adapter position
+int position = 100; // adapter position
+mRecyclerView.setSelection(position, CenteringRecyclerView.ALIGN_CENTER);
 ```
+
+If you don't want (completely) visible views re-layout, set `ignoreIfVisible` or `ignoreIfCompletelyVisible` to true.
+```java
+mRecyclerView.setIgnoreIfVisible(true);
+
+mRecyclerView.setIgnoreIfCompletelyVisible(true);
+```
+
+**XML attributes**
+```xml
+<org.mightyfrog.widget.CenteringRecyclerView
+  ...
+  app:ignoreIfVisible="true" />
+
+<org.mightyfrog.widget.CenteringRecyclerView
+  ...
+  app:ignoreIfCompletelyVisible="true" />
+
+```
+
+**other public methods**
+
+`isVisible(int);`
+
+`isCompletelyVisible(int)`
+
+`getFirstVisiblePosition()`
+
+`getLastVisiblePosition()`
+
+`getFirstCompletelyVisiblePosition()`
+
+`getLastCompletelyVisiblePosition()`
+
 
 License
 --------
