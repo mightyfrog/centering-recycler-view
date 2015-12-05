@@ -17,7 +17,7 @@
 package org.mightyfrog.widget;
 
 import android.content.Context;
-import android.graphics.Rect;
+import android.content.res.TypedArray;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -34,16 +34,31 @@ public class CenteringRecyclerView extends RecyclerView {
     public static final int ALIGN_END = 3;
     public static final int ALIGN_CENTER = 4;
 
+    private boolean mIgnoreIfVisible;
+    private boolean mIgnoreIfCompletelyVisible;
+
     public CenteringRecyclerView(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public CenteringRecyclerView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public CenteringRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
+        TypedArray a = context.getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.CenteringRecyclerView,
+                0, 0);
+
+        try {
+            mIgnoreIfVisible = a.getBoolean(R.styleable.CenteringRecyclerView_ignoreIfVisible, false);
+            mIgnoreIfCompletelyVisible = a.getBoolean(R.styleable.CenteringRecyclerView_ignoreIfCompletelyVisible, false);
+        } finally {
+            a.recycle();
+        }
     }
 
     /**
@@ -86,6 +101,14 @@ public class CenteringRecyclerView extends RecyclerView {
      * @see #start(int)
      */
     public void top(final int position) {
+        if (mIgnoreIfCompletelyVisible && isCompletelyVisible(position)) {
+            return;
+        }
+
+        if (mIgnoreIfVisible && isVisible(position)) {
+            return;
+        }
+
         LayoutManager lm = getLayoutManager();
         if (lm instanceof LinearLayoutManager) {
             LinearLayoutManager llm = (LinearLayoutManager) lm;
@@ -105,6 +128,14 @@ public class CenteringRecyclerView extends RecyclerView {
      * @see #end(int)
      */
     public void bottom(final int position) {
+        if (mIgnoreIfCompletelyVisible && isCompletelyVisible(position)) {
+            return;
+        }
+
+        if (mIgnoreIfVisible && isVisible(position)) {
+            return;
+        }
+
         LayoutManager lm = getLayoutManager();
         if (lm instanceof LinearLayoutManager) {
             LinearLayoutManager llm = (LinearLayoutManager) lm;
@@ -118,30 +149,16 @@ public class CenteringRecyclerView extends RecyclerView {
             post(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        // https://code.google.com/p/android/issues/detail?id=181461
-                        // https://code.google.com/p/android/issues/detail?id=180521
-                        Method m = sglm.getClass().getDeclaredMethod("ensureOrientationHelper");
-                        m.setAccessible(true);
-                        m.invoke(sglm);
-
-                        int[] firstVisibleItemPositions = sglm.findFirstVisibleItemPositions(null);
-                        int[] lastVisibleItemPositions = sglm.findLastVisibleItemPositions(null);
-                        Arrays.sort(firstVisibleItemPositions);
-                        Arrays.sort(lastVisibleItemPositions);
-                        int first = firstVisibleItemPositions[0];
-                        int last = lastVisibleItemPositions[lastVisibleItemPositions.length - 1];
-                        int childPosition = 0;
-                        for (int i = first; i < last; i++) {
-                            if (i == position) {
-                                int offset = getBottomOffset(sglm.getOrientation(), childPosition);
-                                sglm.scrollToPositionWithOffset(position, offset);
-                                break;
-                            }
-                            childPosition++;
+                    int first = getFirstVisiblePosition();
+                    int last = getLastVisiblePosition();
+                    int childPosition = 0;
+                    for (int i = first; i < last; i++) {
+                        if (i == position) {
+                            int offset = getBottomOffset(sglm.getOrientation(), childPosition);
+                            sglm.scrollToPositionWithOffset(position, offset);
+                            break;
                         }
-                    } catch (Exception e) {
-                        // ignore, the grid is still visible but not fully centered
+                        childPosition++;
                     }
                 }
             });
@@ -176,6 +193,14 @@ public class CenteringRecyclerView extends RecyclerView {
      * @param position The adapter position.
      */
     public void center(final int position) {
+        if (mIgnoreIfCompletelyVisible && isCompletelyVisible(position)) {
+            return;
+        }
+
+        if (mIgnoreIfVisible && isVisible(position)) {
+            return;
+        }
+
         LayoutManager lm = getLayoutManager();
         if (lm instanceof LinearLayoutManager) {
             LinearLayoutManager llm = (LinearLayoutManager) lm;
@@ -189,35 +214,192 @@ public class CenteringRecyclerView extends RecyclerView {
             post(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        // https://code.google.com/p/android/issues/detail?id=181461
-                        // https://code.google.com/p/android/issues/detail?id=180521
-                        Method m = sglm.getClass().getDeclaredMethod("ensureOrientationHelper");
-                        m.setAccessible(true);
-                        m.invoke(sglm);
-
-                        int[] firstVisibleItemPositions = sglm.findFirstVisibleItemPositions(null);
-                        int[] lastVisibleItemPositions = sglm.findLastVisibleItemPositions(null);
-                        Arrays.sort(firstVisibleItemPositions);
-                        Arrays.sort(lastVisibleItemPositions);
-                        int first = firstVisibleItemPositions[0];
-                        int last = lastVisibleItemPositions[lastVisibleItemPositions.length - 1];
-                        int childPosition = 0;
-                        for (int i = first; i < last; i++) {
-                            if (i == position) {
-                                int offset = getCenterOffset(sglm.getOrientation(), childPosition);
-                                sglm.scrollToPositionWithOffset(position, offset);
-                                break;
-                            }
-                            childPosition++;
+                    int first = getFirstVisiblePosition();
+                    int last = getLastVisiblePosition();
+                    int childPosition = 0;
+                    for (int i = first; i < last; i++) {
+                        if (i == position) {
+                            int offset = getCenterOffset(sglm.getOrientation(), childPosition);
+                            sglm.scrollToPositionWithOffset(position, offset);
+                            break;
                         }
-                    } catch (Exception e) {
-                        // ignore, the grid is still visible but not fully centered
+                        childPosition++;
                     }
                 }
             });
         } else {
             throw new UnsupportedOperationException("unsupported layout manager");
+        }
+    }
+
+    /**
+     * If you want to ignore aligning requests a view at the requested position is completely
+     * visible, set this to true.
+     *
+     * @param ignoreIfCompletelyVisible true | false
+     */
+    public void setIgnoreIfCompletelyVisible(boolean ignoreIfCompletelyVisible) {
+        mIgnoreIfCompletelyVisible = ignoreIfCompletelyVisible;
+    }
+
+
+    /**
+     * If you want to ignore aligning requests a view at the requested position is visible, set
+     * this to true.
+     *
+     * @param ignoreIfVisible true | false
+     */
+    public void setIgnoreIfVisible(boolean ignoreIfVisible) {
+        mIgnoreIfVisible = ignoreIfVisible;
+    }
+
+    /**
+     * Returns if a view at the given position is visible or not.
+     *
+     * @param position The adapter position.
+     * @see #isCompletelyVisible(int)
+     */
+    public boolean isVisible(int position) {
+        int first = getFirstVisiblePosition();
+        int last = getLastVisiblePosition();
+        return first <= position && last >= position;
+    }
+
+    /**
+     * Returns if a view at the given position is completely visible or not.
+     *
+     * @param position The adapter position.
+     * @see #isVisible(int)
+     */
+    public boolean isCompletelyVisible(int position) {
+        int first = getFirstCompletelyVisiblePosition();
+        int last = getLastCompletelyVisiblePosition();
+        return first <= position && last >= position;
+    }
+
+    /**
+     * Returns the first visible grid position.
+     *
+     * @return the first visible position or RecyclerView.NO_POSITION if any error occurs.
+     * @see #getFirstCompletelyVisiblePosition()
+     */
+    public int getFirstVisiblePosition() {
+        LayoutManager lm = getLayoutManager();
+        if (lm instanceof LinearLayoutManager) {
+            LinearLayoutManager llm = (LinearLayoutManager) lm;
+
+            return llm.findFirstVisibleItemPosition();
+        } else {
+            StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
+            try {
+                // https://code.google.com/p/android/issues/detail?id=181461
+                // https://code.google.com/p/android/issues/detail?id=180521
+                Method m = sglm.getClass().getDeclaredMethod("ensureOrientationHelper");
+                m.setAccessible(true);
+                m.invoke(sglm);
+
+                int[] firstVisibleItemPositions = sglm.findFirstVisibleItemPositions(null);
+                Arrays.sort(firstVisibleItemPositions);
+
+                return firstVisibleItemPositions[0];
+            } catch (Exception e) {
+                android.util.Log.e(getClass().getSimpleName(), "" + e);
+                return RecyclerView.NO_POSITION;
+            }
+        }
+    }
+
+    /**
+     * Returns the last visible grid position.
+     *
+     * @return the last visible position or RecyclerView.NO_POSITION if any error occurs.
+     * @see #getLastCompletelyVisiblePosition()
+     */
+    public int getLastVisiblePosition() {
+        LayoutManager lm = getLayoutManager();
+        if (lm instanceof LinearLayoutManager) {
+            LinearLayoutManager llm = (LinearLayoutManager) lm;
+
+            return llm.findLastVisibleItemPosition();
+        } else {
+            StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
+            try {
+                // https://code.google.com/p/android/issues/detail?id=181461
+                // https://code.google.com/p/android/issues/detail?id=180521
+                Method m = sglm.getClass().getDeclaredMethod("ensureOrientationHelper");
+                m.setAccessible(true);
+                m.invoke(sglm);
+
+                int[] lastVisibleItemPositions = sglm.findLastVisibleItemPositions(null);
+                Arrays.sort(lastVisibleItemPositions);
+
+                return lastVisibleItemPositions[lastVisibleItemPositions.length - 1];
+            } catch (Exception e) {
+                android.util.Log.e(getClass().getSimpleName(), "" + e);
+                return RecyclerView.NO_POSITION;
+            }
+        }
+    }
+
+    /**
+     * Returns the first completely visible grid position.
+     *
+     * @return the first completely visible position or RecyclerView.NO_POSITION if any error occurs.
+     * @see #getFirstVisiblePosition()
+     */
+    public int getFirstCompletelyVisiblePosition() {
+        LayoutManager lm = getLayoutManager();
+        if (lm instanceof LinearLayoutManager) {
+            LinearLayoutManager llm = (LinearLayoutManager) lm;
+            return llm.findFirstCompletelyVisibleItemPosition();
+        } else {
+            StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
+            try {
+                // https://code.google.com/p/android/issues/detail?id=181461
+                // https://code.google.com/p/android/issues/detail?id=180521
+                Method m = sglm.getClass().getDeclaredMethod("ensureOrientationHelper");
+                m.setAccessible(true);
+                m.invoke(sglm);
+
+                int[] firstVisibleItemPositions = sglm.findFirstCompletelyVisibleItemPositions(null);
+                Arrays.sort(firstVisibleItemPositions);
+
+                return firstVisibleItemPositions[0];
+            } catch (Exception e) {
+                android.util.Log.e(getClass().getSimpleName(), "" + e);
+                return RecyclerView.NO_POSITION;
+            }
+        }
+    }
+
+    /**
+     * Returns the last completely visible grid position.
+     *
+     * @return the last completely visible position or RecyclerView.NO_POSITION if any error occurs.
+     * @see #getLastVisiblePosition()
+     */
+    public int getLastCompletelyVisiblePosition() {
+        LayoutManager lm = getLayoutManager();
+        if (lm instanceof LinearLayoutManager) {
+            LinearLayoutManager llm = (LinearLayoutManager) lm;
+            return llm.findLastCompletelyVisibleItemPosition();
+        } else {
+            StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
+            try {
+                // https://code.google.com/p/android/issues/detail?id=181461
+                // https://code.google.com/p/android/issues/detail?id=180521
+                Method m = sglm.getClass().getDeclaredMethod("ensureOrientationHelper");
+                m.setAccessible(true);
+                m.invoke(sglm);
+
+                int[] lastVisibleItemPositions = sglm.findLastCompletelyVisibleItemPositions(null);
+                Arrays.sort(lastVisibleItemPositions);
+
+                return lastVisibleItemPositions[lastVisibleItemPositions.length - 1];
+            } catch (Exception e) {
+                android.util.Log.e(getClass().getSimpleName(), "" + e);
+                return RecyclerView.NO_POSITION;
+            }
         }
     }
 
@@ -249,10 +431,7 @@ public class CenteringRecyclerView extends RecyclerView {
         if (orientation == OrientationHelper.HORIZONTAL) {
             return getWidth() - getChildAt(childPosition).getWidth();
         } else {
-            Rect rect = new Rect();
-            getChildAt(childPosition).getLocalVisibleRect(rect);
             return getHeight() - getChildAt(childPosition).getHeight();
         }
     }
-
 }

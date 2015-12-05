@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int position = mRand.nextInt(1000);
+                int position = mRand.nextInt(DemoAdapter.ITEM_COUNT);
                 mRecyclerView.center(position);
                 ActionBar ab = getSupportActionBar();
                 if (ab != null) {
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
      * LinearLayoutManager demo adapter.
      */
     private class DemoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        private static final int ITEM_COUNT = 1000;
+        public static final int ITEM_COUNT = 1000;
 
         protected final int mLayout;
 
