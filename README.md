@@ -21,11 +21,11 @@ CenteringRecyclerView mRecyclerView;
 int position = 100; // adapter position
 mRecyclerView.center(position);
 
-mRecyclerView.head(position);
+mRecyclerView.head(position); // vertical: align top, horizontal: align left 
 
-mRecyclerView.tail(position);
+mRecyclerView.tail(position); // vertical: align bottom, horiztal: align right
 ```
-####setSelection(int position, int alignment)
+####alternative method: setSelection(int position, int alignment)
 ```java
 CenteringRecyclerView mRecyclerView;
 ...
