@@ -9,7 +9,7 @@ Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centeri
 --------
 
 ```groovy
-compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.4'
+compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.6'
 ```
 
 Usage
