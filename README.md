@@ -14,20 +14,16 @@ compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.4'
 
 Usage
 --------
-####center, top, bottom, start, end(int position)
+####center, head, tail(int position)
 ```java
 CenteringRecyclerView mRecyclerView;
 ...
 int position = 100; // adapter position
 mRecyclerView.center(position);
 
-mRecyclerView.top(position);
+mRecyclerView.head(position);
 
-mRecyclerView.bottom(position);
-
-mRecyclerView.start(position);
-
-mRecyclerView.end(position);
+mRecyclerView.tail(position);
 ```
 ####setSelection(int position, int alignment)
 ```java
