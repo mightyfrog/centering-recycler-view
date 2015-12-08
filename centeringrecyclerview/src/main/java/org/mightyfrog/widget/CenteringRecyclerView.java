@@ -23,16 +23,20 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
+import android.view.View;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
 public class CenteringRecyclerView extends RecyclerView {
-    public static final int ALIGN_TOP = 0;
-    public static final int ALIGN_BOTTOM = 1;
-    public static final int ALIGN_START = 2;
-    public static final int ALIGN_END = 3;
-    public static final int ALIGN_CENTER = 4;
+    public static final int ALIGN_HEAD = 0;
+    public static final int ALIGN_TAIL = 1;
+    public static final int ALIGN_CENTER = 2;
+
+    public static final int SNAPPING_STRATEGY_HEAD = 0;
+    public static final int SNAPPING_STRATEGY_TAIL = 1;
+    public static final int SNAPPING_STRATEGY_CENTER = 2;
+    public static final int SNAPPING_STRATEGY_NONE = 3;
 
     private boolean mIgnoreIfVisible;
     private boolean mIgnoreIfCompletelyVisible;
@@ -77,17 +81,11 @@ public class CenteringRecyclerView extends RecyclerView {
             case ALIGN_CENTER:
                 center(position);
                 break;
-            case ALIGN_TOP:
-                top(position);
+            case ALIGN_HEAD:
+                head(position);
                 break;
-            case ALIGN_BOTTOM:
-                bottom(position);
-                break;
-            case ALIGN_START:
-                start(position);
-                break;
-            case ALIGN_END:
-                end(position);
+            case ALIGN_TAIL:
+                tail(position);
                 break;
             default:
                 throw new IllegalArgumentException("unknown alignment");
@@ -95,12 +93,11 @@ public class CenteringRecyclerView extends RecyclerView {
     }
 
     /**
-     * Top-aligns a view at the given position.
+     * Aligns a view of the given position to top (vertical layout) or left (horizontal layout).
      *
      * @param position The adapter position.
-     * @see #start(int)
      */
-    public void top(final int position) {
+    public void head(int position) {
         if (mIgnoreIfCompletelyVisible && isCompletelyVisible(position)) {
             return;
         }
@@ -122,12 +119,11 @@ public class CenteringRecyclerView extends RecyclerView {
     }
 
     /**
-     * Bottom-aligns a view at the given position.
+     * Aligns a view of the given position to tail (vertical layout) or right (horizontal layout).
      *
      * @param position The adapter position.
-     * @see #end(int)
      */
-    public void bottom(final int position) {
+    public void tail(final int position) {
         if (mIgnoreIfCompletelyVisible && isCompletelyVisible(position)) {
             return;
         }
@@ -168,27 +164,7 @@ public class CenteringRecyclerView extends RecyclerView {
     }
 
     /**
-     * Start-aligns a view at the given position.
-     *
-     * @param position The adapter position.
-     * @see #top(int)
-     */
-    public void start(int position) {
-        top(position);
-    }
-
-    /**
-     * End-aligns a view at the given position.
-     *
-     * @param position The adapter position.
-     * @see #bottom(int)
-     */
-    public void end(int position) {
-        bottom(position);
-    }
-
-    /**
-     * Center-aligns a view at the given position.
+     * Aligns a view at the given position to center.
      *
      * @param position The adapter position.
      */
@@ -229,6 +205,42 @@ public class CenteringRecyclerView extends RecyclerView {
             });
         } else {
             throw new UnsupportedOperationException("unsupported layout manager");
+        }
+    }
+
+    /**
+     * Snaps to a closer edge, top or bottom (start or end if horizontal).
+     *
+     * @param position The adapter position.
+     * @param strategy The snapping strategy.
+     */
+    public void snap(final int position, int strategy) {
+        if (position < 0) {
+            scrollToPosition(0);
+            return;
+        }
+
+        int diffFirst = getFirstVisiblePosition() - position;
+        int diffLast = position - getLastVisiblePosition();
+        if (diffFirst > diffLast) {
+            head(position);
+        } else if (diffFirst < diffLast) {
+            tail(position);
+        } else {
+            switch (strategy) {
+                case SNAPPING_STRATEGY_HEAD:
+                    head(position);
+                    break;
+                case SNAPPING_STRATEGY_TAIL:
+                    tail(position);
+                    break;
+                case SNAPPING_STRATEGY_CENTER:
+                    center(position);
+                    break;
+                case SNAPPING_STRATEGY_NONE:
+                    // no-op
+                    break;
+            }
         }
     }
 
@@ -403,9 +415,54 @@ public class CenteringRecyclerView extends RecyclerView {
         }
     }
 
+    /**
+     * Top-aligns a view at the given position.
+     *
+     * @param position The adapter position.
+     * @see #start(int)
+     */
+    @Deprecated
+    public void top(int position) {
+        head(position);
+    }
+
+    /**
+     * Bottom-aligns a view at the given position.
+     *
+     * @param position The adapter position.
+     * @see #end(int)
+     */
+    public void bottom(int position) {
+        tail(position);
+    }
+
+    /**
+     * Start-aligns a view at the given position.
+     *
+     * @param position The adapter position.
+     * @see #top(int)
+     */
+    @Deprecated
+    public void start(int position) {
+        head(position);
+    }
+
+    /**
+     * End-aligns a view at the given position.
+     *
+     * @param position The adapter position.
+     * @see #bottom(int)
+     */
+    @Deprecated
+    public void end(int position) {
+        tail(position);
+    }
+
     //
     //
     //
+
+    private int mFallbackCenterOffset;
 
     /**
      * Calculates and returns the center offset size.
@@ -414,12 +471,21 @@ public class CenteringRecyclerView extends RecyclerView {
      * @param childPosition The visible child position.
      */
     private int getCenterOffset(int orientation, int childPosition) {
-        if (orientation == OrientationHelper.HORIZONTAL) {
-            return getWidth() / 2 - getChildAt(childPosition).getWidth() / 2;
-        } else {
-            return getHeight() / 2 - getChildAt(childPosition).getHeight() / 2;
+        View child = getChildAt(childPosition);
+        if (child == null) {
+            return mFallbackCenterOffset;
         }
+
+        if (orientation == OrientationHelper.HORIZONTAL) {
+            mFallbackCenterOffset = getWidth() / 2 - child.getWidth() / 2;
+        } else {
+            mFallbackCenterOffset = getHeight() / 2 - child.getHeight() / 2;
+        }
+
+        return mFallbackCenterOffset;
     }
+
+    private int mFallbackBottomOffset;
 
     /**
      * Calculates and returns the bottom offset size.
@@ -428,10 +494,17 @@ public class CenteringRecyclerView extends RecyclerView {
      * @param childPosition The visible child position.
      */
     private int getBottomOffset(int orientation, int childPosition) {
-        if (orientation == OrientationHelper.HORIZONTAL) {
-            return getWidth() - getChildAt(childPosition).getWidth();
-        } else {
-            return getHeight() - getChildAt(childPosition).getHeight();
+        View child = getChildAt(childPosition);
+        if (child == null) {
+            return mFallbackBottomOffset;
         }
+
+        if (orientation == OrientationHelper.HORIZONTAL) {
+            mFallbackBottomOffset = getWidth() - child.getWidth();
+        } else {
+            mFallbackBottomOffset = getHeight() - child.getHeight();
+        }
+
+        return mFallbackBottomOffset;
     }
 }
