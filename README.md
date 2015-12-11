@@ -9,12 +9,12 @@ Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centeri
 --------
 
 ```groovy
-compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.6'
+compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.8'
 ```
 
 Usage
 --------
-####center, head, tail(int position)
+####center, head, tail(int position) - scrolls to center, head, or tail
 ```java
 CenteringRecyclerView mRecyclerView;
 ...
@@ -24,6 +24,12 @@ mRecyclerView.center(position);
 mRecyclerView.head(position); // vertical: align top, horizontal: align left 
 
 mRecyclerView.tail(position); // vertical: align bottom, horiztal: align right
+```
+####snap(int, int) - snaps to a closer end
+```java
+CenteringRecyclerView mRecyclerView;
+...
+mRecyclerView.snap(10, CenteringRecyclerView.SNAPPING_STRATEGY_CENTER);
 ```
 ####alternative method: setSelection(int position, int alignment)
 ```java
