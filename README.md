@@ -1,5 +1,5 @@
 # Centering Recycler View (Android)
-A RecyclerView implementation that scrolls to center, top, bottom, left, and right.
+A RecyclerView implementation that scrolls a view to center, top, bottom, left, and right.
 
 ###centering demo
 
@@ -14,7 +14,7 @@ compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.8'
 
 Usage
 --------
-####center, head, tail(int position) - scrolls to center, head, or tail
+####center, head, tail(int position) - scrolls a view at the specified position to center, head, or tail
 ```java
 CenteringRecyclerView mRecyclerView;
 ...
@@ -25,7 +25,7 @@ mRecyclerView.head(position); // vertical: scrolls to top, horizontal: scrolls t
 
 mRecyclerView.tail(position); // vertical: scrolls to bottom, horiztal: scrolls to right
 ```
-####snap(int, int) - snaps to a closer end
+####snap(int, int) - snaps a view at the specified position to a closer end
 ```java
 CenteringRecyclerView mRecyclerView;
 ...
