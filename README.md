@@ -1,9 +1,7 @@
+<img src="website/demo.gif" alt="demo" align="right" width="200px" />
+
 # Centering Recycler View (Android)
 A RecyclerView implementation that scrolls a view to center, top, bottom, left, and right.
-
-###centering demo
-
-<img src="website/demo.gif" alt="demo" width="200px" />
 
 Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centering-recycler-view/images/download.svg) ](https://bintray.com/mightyfrog/maven/centering-recycler-view/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Centering%20Recycler%20View-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2899)
 --------
