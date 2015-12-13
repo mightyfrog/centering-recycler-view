@@ -1,11 +1,11 @@
 # Centering Recycler View (Android)
-A view aligning (center, top, bottom, start, end) RecyclerView.
+A RecyclerView implementation that scrolls to center, top, bottom, left, and right.
 
 ###centering demo
 
 <img src="website/demo.gif" alt="demo" width="200px" />
 
-Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centering-recycler-view/images/download.svg) ](https://bintray.com/mightyfrog/maven/centering-recycler-view/_latestVersion)
+Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centering-recycler-view/images/download.svg) ](https://bintray.com/mightyfrog/maven/centering-recycler-view/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Centering%20Recycler%20View-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2899)
 --------
 
 ```groovy
@@ -21,9 +21,9 @@ CenteringRecyclerView mRecyclerView;
 int position = 100; // adapter position
 mRecyclerView.center(position);
 
-mRecyclerView.head(position); // vertical: align top, horizontal: align left 
+mRecyclerView.head(position); // vertical: scrolls to top, horizontal: scrolls to left 
 
-mRecyclerView.tail(position); // vertical: align bottom, horiztal: align right
+mRecyclerView.tail(position); // vertical: scrolls to bottom, horiztal: scrolls to right
 ```
 ####snap(int, int) - snaps to a closer end
 ```java
