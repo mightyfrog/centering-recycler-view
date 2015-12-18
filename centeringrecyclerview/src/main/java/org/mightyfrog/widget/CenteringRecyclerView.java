@@ -214,7 +214,15 @@ public class CenteringRecyclerView extends RecyclerView {
      * @param strategy The snapping strategy. Applied when the given position has the same distance
      *                 from the both ends.
      */
-    public void snap(final int position, int strategy) {
+    public void snap(int position, int strategy) {
+        if (mIgnoreIfCompletelyVisible && isCompletelyVisible(position)) {
+            return;
+        }
+
+        if (mIgnoreIfVisible && isVisible(position)) {
+            return;
+        }
+
         if (position < 0) {
             scrollToPosition(0);
             return;
