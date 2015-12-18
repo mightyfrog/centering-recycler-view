@@ -7,7 +7,7 @@ Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centeri
 --------
 
 ```groovy
-compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.8'
+compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.9'
 ```
 
 Usage
@@ -58,9 +58,9 @@ mRecyclerView.setIgnoreIfCompletelyVisible(true);
 
 **other public methods**
 
-`isVisible(int);`
+`isVisible(int position);`
 
-`isCompletelyVisible(int)`
+`isCompletelyVisible(int position)`
 
 `getFirstVisiblePosition()`
 
