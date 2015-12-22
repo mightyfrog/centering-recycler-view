@@ -7,7 +7,7 @@ Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centeri
 --------
 
 ```groovy
-compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.9'
+compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.11'
 ```
 
 Proguard
