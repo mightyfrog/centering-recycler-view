@@ -10,13 +10,6 @@ Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centeri
 compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.11'
 ```
 
-Proguard
---------
-```groovy
--keep class android.support.v7.widget.StaggeredGridLayoutManager {
-    private void ensureOrientationHelper();
-}
-````
 Usage
 --------
 ####center, head, tail(int position) - scrolls a view at the specified position to center, head, or tail
