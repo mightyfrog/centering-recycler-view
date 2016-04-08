@@ -7,6 +7,11 @@ Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centeri
 --------
 
 ```groovy
+compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.12'
+```
+
+Use v1.0.11 if you need support library v23.2.1 or older AND StaggeredGridLayoutMangaer
+```groovy
 compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.11'
 ```
 
