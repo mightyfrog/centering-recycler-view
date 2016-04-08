@@ -2,13 +2,13 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 23
-        versionCode 12
-        versionName "1.0.11"
+        versionCode 13
+        versionName "1.0.12"
         consumerProguardFiles 'proguard-rules.pro'
     }
     buildTypes {
@@ -20,15 +20,15 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile 'com.android.support:design:23.2.0'
 }
 
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'org.mightyfrog.centeringrecyclerview'
-version = '1.0.11'
+version = '1.0.12'
 def siteUrl = 'https://github.com/mightyfrog/centering-recycler-view'
 def gitUrl = 'https://github.com/mightyfrog/centering-recycler-view.git'
 

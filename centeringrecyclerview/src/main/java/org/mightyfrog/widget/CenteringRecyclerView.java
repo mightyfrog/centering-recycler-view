@@ -26,7 +26,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
 
-import java.lang.reflect.Method;
 import java.util.Arrays;
 
 public class CenteringRecyclerView extends RecyclerView {
@@ -311,21 +310,10 @@ public class CenteringRecyclerView extends RecyclerView {
             return llm.findFirstVisibleItemPosition();
         } else {
             StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
-            try {
-                // https://code.google.com/p/android/issues/detail?id=181461
-                // https://code.google.com/p/android/issues/detail?id=180521
-                Method m = sglm.getClass().getDeclaredMethod("ensureOrientationHelper");
-                m.setAccessible(true);
-                m.invoke(sglm);
+            int[] firstVisibleItemPositions = sglm.findFirstVisibleItemPositions(null);
+            Arrays.sort(firstVisibleItemPositions);
 
-                int[] firstVisibleItemPositions = sglm.findFirstVisibleItemPositions(null);
-                Arrays.sort(firstVisibleItemPositions);
-
-                return firstVisibleItemPositions[0];
-            } catch (Exception e) {
-                android.util.Log.e(getClass().getSimpleName(), "" + e);
-                return RecyclerView.NO_POSITION;
-            }
+            return firstVisibleItemPositions[0];
         }
     }
 
@@ -343,21 +331,10 @@ public class CenteringRecyclerView extends RecyclerView {
             return llm.findLastVisibleItemPosition();
         } else {
             StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
-            try {
-                // https://code.google.com/p/android/issues/detail?id=181461
-                // https://code.google.com/p/android/issues/detail?id=180521
-                Method m = sglm.getClass().getDeclaredMethod("ensureOrientationHelper");
-                m.setAccessible(true);
-                m.invoke(sglm);
+            int[] lastVisibleItemPositions = sglm.findLastVisibleItemPositions(null);
+            Arrays.sort(lastVisibleItemPositions);
 
-                int[] lastVisibleItemPositions = sglm.findLastVisibleItemPositions(null);
-                Arrays.sort(lastVisibleItemPositions);
-
-                return lastVisibleItemPositions[lastVisibleItemPositions.length - 1];
-            } catch (Exception e) {
-                android.util.Log.e(getClass().getSimpleName(), "" + e);
-                return RecyclerView.NO_POSITION;
-            }
+            return lastVisibleItemPositions[lastVisibleItemPositions.length - 1];
         }
     }
 
@@ -374,21 +351,10 @@ public class CenteringRecyclerView extends RecyclerView {
             return llm.findFirstCompletelyVisibleItemPosition();
         } else {
             StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
-            try {
-                // https://code.google.com/p/android/issues/detail?id=181461
-                // https://code.google.com/p/android/issues/detail?id=180521
-                Method m = sglm.getClass().getDeclaredMethod("ensureOrientationHelper");
-                m.setAccessible(true);
-                m.invoke(sglm);
+            int[] firstVisibleItemPositions = sglm.findFirstCompletelyVisibleItemPositions(null);
+            Arrays.sort(firstVisibleItemPositions);
 
-                int[] firstVisibleItemPositions = sglm.findFirstCompletelyVisibleItemPositions(null);
-                Arrays.sort(firstVisibleItemPositions);
-
-                return firstVisibleItemPositions[0];
-            } catch (Exception e) {
-                android.util.Log.e(getClass().getSimpleName(), "" + e);
-                return RecyclerView.NO_POSITION;
-            }
+            return firstVisibleItemPositions[0];
         }
     }
 
@@ -405,21 +371,10 @@ public class CenteringRecyclerView extends RecyclerView {
             return llm.findLastCompletelyVisibleItemPosition();
         } else {
             StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
-            try {
-                // https://code.google.com/p/android/issues/detail?id=181461
-                // https://code.google.com/p/android/issues/detail?id=180521
-                Method m = sglm.getClass().getDeclaredMethod("ensureOrientationHelper");
-                m.setAccessible(true);
-                m.invoke(sglm);
+            int[] lastVisibleItemPositions = sglm.findLastCompletelyVisibleItemPositions(null);
+            Arrays.sort(lastVisibleItemPositions);
 
-                int[] lastVisibleItemPositions = sglm.findLastCompletelyVisibleItemPositions(null);
-                Arrays.sort(lastVisibleItemPositions);
-
-                return lastVisibleItemPositions[lastVisibleItemPositions.length - 1];
-            } catch (Exception e) {
-                android.util.Log.e(getClass().getSimpleName(), "" + e);
-                return RecyclerView.NO_POSITION;
-            }
+            return lastVisibleItemPositions[lastVisibleItemPositions.length - 1];
         }
     }
 
