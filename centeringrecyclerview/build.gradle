@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    compileSdkVersion 25
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
-        minSdkVersion 7
-        targetSdkVersion 24
+        minSdkVersion 14
+        targetSdkVersion 25
         versionCode 13
         versionName "1.0.12"
         consumerProguardFiles 'proguard-rules.pro'
@@ -19,9 +19,11 @@ android {
     }
 }
 
+def supportLibVer = "25.0.1"
+
 dependencies {
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
+    compile "com.android.support:appcompat-v7:${supportLibVer}"
+    compile "com.android.support:design:${supportLibVer}"
 }
 
 apply plugin: 'com.github.dcendents.android-maven'
