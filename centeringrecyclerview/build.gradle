@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "24.0.3"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 14
@@ -19,7 +19,7 @@ android {
     }
 }
 
-def supportLibVer = "25.0.1"
+def supportLibVer = "25.2.0"
 
 dependencies {
     compile "com.android.support:appcompat-v7:${supportLibVer}"
@@ -109,8 +109,4 @@ allprojects {
     repositories {
         jcenter()
     }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }
