@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 15
-        versionName "1.0.14"
+        versionCode 16
+        versionName "$version_name"
         consumerProguardFiles 'proguard-rules.pro'
     }
     buildTypes {
@@ -19,18 +19,16 @@ android {
     }
 }
 
-def supportLibVer = "25.2.0"
-
 dependencies {
-    compile "com.android.support:appcompat-v7:${supportLibVer}"
-    compile "com.android.support:design:${supportLibVer}"
+    compile "com.android.support:appcompat-v7:$support_lib_version"
+    compile "com.android.support:design:$support_lib_version"
 }
 
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'org.mightyfrog.centeringrecyclerview'
-version = '1.0.14'
+version = "$version_name"
 def siteUrl = 'https://github.com/mightyfrog/centering-recycler-view'
 def gitUrl = 'https://github.com/mightyfrog/centering-recycler-view.git'
 
