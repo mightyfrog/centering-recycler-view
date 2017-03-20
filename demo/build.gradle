@@ -9,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName "$version_name"
         multiDexEnabled true
     }
     buildTypes {
@@ -20,10 +20,8 @@ android {
     }
 }
 
-def supportLibVer = "25.2.0"
-
 dependencies {
-    compile "com.android.support:appcompat-v7:${supportLibVer}"
-    compile "com.android.support:design:${supportLibVer}"
+    compile "com.android.support:appcompat-v7:$support_lib_version"
+    compile "com.android.support:design:$support_lib_version"
     compile project(':centeringrecyclerview')
 }
