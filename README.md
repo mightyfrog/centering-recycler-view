@@ -17,7 +17,7 @@ compile 'org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.0.11'
 
 Usage
 --------
-####center, head, tail(int position) - scrolls a view at the specified position to center, head, or tail
+#### center, head, tail(int position) - scrolls a view at the specified position to center, head, or tail
 ```java
 CenteringRecyclerView mRecyclerView;
 ...
@@ -28,13 +28,13 @@ mRecyclerView.head(position); // vertical: scrolls to top, horizontal: scrolls t
 
 mRecyclerView.tail(position); // vertical: scrolls to bottom, horiztal: scrolls to right
 ```
-####snap(int, int) - snaps a view at the specified position to a closer end
+#### snap(int, int) - snaps a view at the specified position to a closer end
 ```java
 CenteringRecyclerView mRecyclerView;
 ...
 mRecyclerView.snap(10, CenteringRecyclerView.SNAPPING_STRATEGY_CENTER);
 ```
-####alternative method: setSelection(int position, int alignment)
+#### alternative method: setSelection(int position, int alignment)
 ```java
 CenteringRecyclerView mRecyclerView;
 ...
@@ -42,7 +42,7 @@ int position = 100; // adapter position
 mRecyclerView.setSelection(position, CenteringRecyclerView.ALIGN_CENTER);
 ```
 
-If you don't want already (completely) visible views re-layout, set `ignoreIfVisible` or `ignoreIfCompletelyVisible` to true.
+If you don't want already (completely) visible views re-layouted, set `ignoreIfVisible` or `ignoreIfCompletelyVisible` to true.
 ```java
 mRecyclerView.setIgnoreIfVisible(true);
 
