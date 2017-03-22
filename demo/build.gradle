@@ -23,5 +23,6 @@ android {
 dependencies {
     compile "com.android.support:appcompat-v7:$support_lib_version"
     compile "com.android.support:design:$support_lib_version"
-    compile project(':centeringrecyclerview')
+    compile "org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.1.5"
+    //    compile project(':centeringrecyclerview')
 }
