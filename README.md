@@ -3,7 +3,7 @@
 # Centering Recycler View (Android)
 A RecyclerView implementation that scrolls a view to center, top, bottom, left, and right.
 
-Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centering-recycler-view/images/download.svg) ](https://bintray.com/mightyfrog/maven/centering-recycler-view/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Centering%20Recycler%20View-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2899)
+Download [ ![Download](https://api.bintray.com/packages/mightyfrog/maven/centering-recycler-view/images/download.svg) ](https://bintray.com/mightyfrog/maven/centering-recycler-view/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Centering%20Recycler%20View-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2899) [![Build Status](https://travis-ci.org/mightyfrog/centering-recycler-view.svg?branch=master)](https://travis-ci.org/mightyfrog/centering-recycler-view)
 --------
 
 ```groovy
