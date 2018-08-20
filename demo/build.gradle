@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.0"
 
     defaultConfig {
         applicationId "org.mightyfrog.centeringrecyclerviewdemo"
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 1
         versionName "$version_name"
         multiDexEnabled true
@@ -24,8 +24,8 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:$support_lib_version"
-    compile "com.android.support:design:$support_lib_version"
-    compile "org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.1.5"
-    //    compile project(':centeringrecyclerview')
+    implementation "com.android.support:appcompat-v7:$support_lib_version"
+    implementation "com.android.support:design:$support_lib_version"
+    implementation "org.mightyfrog.centeringrecyclerview:centeringrecyclerview:1.1.7"
+//        implementation project(':centeringrecyclerview')
 }
