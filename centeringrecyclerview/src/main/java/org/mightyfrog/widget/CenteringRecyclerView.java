@@ -310,6 +310,9 @@ public class CenteringRecyclerView extends RecyclerView {
             return llm.findFirstVisibleItemPosition();
         } else {
             StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
+            if (sglm == null) {
+                return NO_POSITION;
+            }
             int[] firstVisibleItemPositions = sglm.findFirstVisibleItemPositions(null);
             Arrays.sort(firstVisibleItemPositions);
 
@@ -331,6 +334,9 @@ public class CenteringRecyclerView extends RecyclerView {
             return llm.findLastVisibleItemPosition();
         } else {
             StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
+            if (sglm == null) {
+                return NO_POSITION;
+            }
             int[] lastVisibleItemPositions = sglm.findLastVisibleItemPositions(null);
             Arrays.sort(lastVisibleItemPositions);
 
@@ -351,6 +357,9 @@ public class CenteringRecyclerView extends RecyclerView {
             return llm.findFirstCompletelyVisibleItemPosition();
         } else {
             StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
+            if (sglm == null) {
+                return NO_POSITION;
+            }
             int[] firstVisibleItemPositions = sglm.findFirstCompletelyVisibleItemPositions(null);
             Arrays.sort(firstVisibleItemPositions);
 
@@ -371,6 +380,9 @@ public class CenteringRecyclerView extends RecyclerView {
             return llm.findLastCompletelyVisibleItemPosition();
         } else {
             StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
+            if (sglm == null) {
+                return NO_POSITION;
+            }
             int[] lastVisibleItemPositions = sglm.findLastCompletelyVisibleItemPositions(null);
             Arrays.sort(lastVisibleItemPositions);
 
