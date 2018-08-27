@@ -23,8 +23,8 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:appcompat-v7:$support_lib_version"
-    implementation "com.android.support:design:$support_lib_version"
+    implementation "androidx.appcompat:appcompat:$support_lib_version"
+    implementation "com.google.android.material:material:$support_lib_version"
 }
 
 apply plugin: 'com.github.dcendents.android-maven'

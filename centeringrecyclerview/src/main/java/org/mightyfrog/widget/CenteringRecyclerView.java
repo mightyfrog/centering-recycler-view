@@ -19,15 +19,19 @@ package org.mightyfrog.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
 
 import java.util.Arrays;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.OrientationHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+/**
+ * @author Shigehiro Soejima
+ */
 public class CenteringRecyclerView extends RecyclerView {
     public static final int ALIGN_HEAD = 0;
     public static final int ALIGN_TAIL = 1;

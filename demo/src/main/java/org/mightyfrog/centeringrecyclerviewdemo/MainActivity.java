@@ -18,14 +18,6 @@ package org.mightyfrog.centeringrecyclerviewdemo;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,13 +25,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.mightyfrog.widget.CenteringRecyclerView;
 
 import java.util.Random;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+/**
+ * @author Shigehiro Soejima
+ */
 public class MainActivity extends AppCompatActivity {
 
-    private Random mRand = new Random();
+    private final Random mRand = new Random();
 
     private CenteringRecyclerView mRecyclerView;
 
@@ -48,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mRecyclerView = (CenteringRecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setAdapter(new DemoAdapter(R.layout.linear_vertical));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,16 +122,17 @@ public class MainActivity extends AppCompatActivity {
      * LinearLayoutManager demo adapter.
      */
     private class DemoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        public static final int ITEM_COUNT = 1000;
+        static final int ITEM_COUNT = 1000;
 
-        protected final int mLayout;
+        final int mLayout;
 
-        public DemoAdapter(int layout) {
+        DemoAdapter(int layout) {
             mLayout = layout;
         }
 
+        @NonNull
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             final View view = LayoutInflater.from(parent.getContext())
                     .inflate(mLayout, parent, false);
 
@@ -134,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
         @SuppressLint("SetTextI18n")
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             DemoViewHolder viewHolder = (DemoViewHolder) holder;
             viewHolder.textView.setText(Integer.toString(position));
             viewHolder.textView.setBackgroundColor(0xff000000 | mRand.nextInt(0xffffff));
@@ -145,13 +152,13 @@ public class MainActivity extends AppCompatActivity {
             return ITEM_COUNT;
         }
 
-        protected class DemoViewHolder extends RecyclerView.ViewHolder {
-            private TextView textView;
+        class DemoViewHolder extends RecyclerView.ViewHolder {
+            private final TextView textView;
 
-            public DemoViewHolder(View itemView) {
+            DemoViewHolder(View itemView) {
                 super(itemView);
 
-                textView = (TextView) itemView.findViewById(R.id.text);
+                textView = itemView.findViewById(R.id.text);
             }
         }
     }
@@ -160,12 +167,13 @@ public class MainActivity extends AppCompatActivity {
      * GridLayoutManager demo adapter.
      */
     private class GridDemoAdapter extends DemoAdapter {
-        public GridDemoAdapter(int layout) {
+        GridDemoAdapter(int layout) {
             super(layout);
         }
 
+        @NonNull
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             final View view = LayoutInflater.from(parent.getContext())
                     .inflate(mLayout, parent, false);
 
@@ -177,23 +185,24 @@ public class MainActivity extends AppCompatActivity {
      * StaggeredGridLayoutManager demo adapter.
      */
     private class StaggeredDemoAdapter extends DemoAdapter {
-        public StaggeredDemoAdapter(int layout) {
+        StaggeredDemoAdapter(int layout) {
             super(layout);
         }
 
         @SuppressLint("SetTextI18n")
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             DemoViewHolder viewHolder = (DemoViewHolder) holder;
             viewHolder.textView.setText(Integer.toString(position));
             viewHolder.textView.setBackgroundColor(0xff000000 | mRand.nextInt(0xffffff));
-            ViewGroup.LayoutParams params = viewHolder.textView.getLayoutParams();
-            if (mRecyclerView.getLayoutManager().canScrollVertically()) {
-                params.height = 150 + mRand.nextInt(500);
-            } else {
-                params.width = 150 + mRand.nextInt(500);
+            if (mRecyclerView.getLayoutManager() != null) {
+                ViewGroup.LayoutParams params = viewHolder.textView.getLayoutParams();
+                if (mRecyclerView.getLayoutManager().canScrollVertically()) {
+                    params.height = 150 + mRand.nextInt(500);
+                } else {
+                    params.width = 150 + mRand.nextInt(500);
+                }
             }
         }
     }
-
 }
