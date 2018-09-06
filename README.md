@@ -95,5 +95,4 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
 
-
-[![Build Status](https://travis-ci.org/mightyfrog/centering-recycler-view.svg?branch=master)](https://travis-ci.org/mightyfrog/centering-recycler-view)
+[![Build Status](https://app.bitrise.io/app/80e9c8281db1934d/status.svg?token=0yEqK8OW8o2qFHtunMEZbQ&branch=master)](https://app.bitrise.io/app/80e9c8281db1934d)
