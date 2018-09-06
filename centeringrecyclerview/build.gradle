@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.0"
 
     defaultConfig {
         minSdkVersion 14
@@ -104,10 +103,4 @@ artifacts {
 
 task findConventions << {
     println project.getConvention()
-}
-
-allprojects {
-    repositories {
-        jcenter()
-    }
 }
