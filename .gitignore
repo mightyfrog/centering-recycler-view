@@ -29,3 +29,5 @@ proguard/
 /gradle.properties
 
 .idea
+*.iml
+
