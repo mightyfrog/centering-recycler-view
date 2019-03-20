@@ -35,8 +35,8 @@ def siteUrl = 'https://github.com/mightyfrog/centering-recycler-view'
 def gitUrl = 'https://github.com/mightyfrog/centering-recycler-view.git'
 
 bintray {
-    user = 'bintray_user'
-    key = 'bintray_api_key'
+    user = "${bintray_user}"
+    key = "${bintray_api_key}"
 
     configurations = ['archives'] //When uploading configuration files
     pkg {
