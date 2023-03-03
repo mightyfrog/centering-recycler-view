@@ -28,7 +28,7 @@ mRecyclerView.head(position); // vertical: scrolls to top, horizontal: scrolls t
 
 mRecyclerView.tail(position); // vertical: scrolls to bottom, horiztal: scrolls to right
 ```
-#### snap(int, int) - snaps a view at the specified position to a closer end
+#### snap(int, int) - snaps a view at the specified position to the closer end
 ```java
 CenteringRecyclerView mRecyclerView;
 ...
