@@ -42,7 +42,7 @@ int position = 100; // adapter position
 mRecyclerView.setSelection(position, CenteringRecyclerView.ALIGN_CENTER);
 ```
 
-If you don't want already (completely) visible views re-layout'ed, set `ignoreIfVisible` or `ignoreIfCompletelyVisible` to true.
+If you don't want already (completely) visible views re-laid out, set `ignoreIfVisible` or `ignoreIfCompletelyVisible` to true.
 ```java
 mRecyclerView.setIgnoreIfVisible(true);
 
